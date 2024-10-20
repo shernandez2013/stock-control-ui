@@ -1,0 +1,42 @@
+.table-container {
+  width: 100%; /* Asegura que la tabla use el ancho completo */
+  padding: 20px; /* Espaciado interno para separar la tabla del borde */
+  box-sizing: border-box; /* Incluye el padding en el ancho total */
+  margin-top: 20px; /* Espaciado entre el header y la tabla */
+}
+
+table {
+  width: 100%;
+}
+
+mat-form-field {
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  table {
+    font-size: 14px;
+  }
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+mat-form-field {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+mat-table {
+  margin-top: 20px;
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 0;
+}

@@ -1,0 +1,29 @@
+html,
+body {
+  height: 100%; /* Ensure the html and body take up the full height of the viewport */
+  margin: 0; /* Remove default margin */
+}
+
+.app-container {
+  display: flex; /* Use flexbox layout */
+  flex-direction: column; /* Arrange children in a column */
+  min-height: 100vh; /* Set minimum height to full viewport height */
+}
+
+main {
+  flex: 1; /* Allow the main content area to expand and take available space */
+}
+
+.container {
+  display: flex; /* Use flexbox for container */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  flex-direction: column; /* Arrange children in a column */
+}
+
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row; /* Change to row layout on larger screens */
+    justify-content: space-between; /* Space out items */
+  }
+}

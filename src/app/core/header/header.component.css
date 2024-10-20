@@ -1,0 +1,123 @@
+/* General styles */
+.header {
+  display: flex;
+  justify-content: flex-start; /* Align items to the left */
+  align-items: center;
+  background-color: #007bff; /* Blue background */
+  color: white;
+  padding: 10px;
+  position: relative;
+}
+
+.app-name {
+  font-size: 18px;
+  margin-left: 10px; /* Creates space between hamburger and app name */
+  white-space: nowrap;
+  display: inline-block;
+}
+
+/* Hamburger menu */
+.hamburger-menu {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.hamburger-menu .line {
+  width: 25px;
+  height: 3px;
+  background-color: white; /* Ensures the lines are visible on blue background */
+  border-radius: 2px;
+}
+
+/* User icon section (moved to the right) */
+.user-info {
+  margin-left: auto; /* Pushes the user info to the right side */
+  position: relative;
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* User details dropdown */
+.user-details {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: white;
+  color: black;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Dropdown menu styles */
+.menu {
+  background-color: white; /* White background */
+  color: black; /* Black text */
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 200px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  padding: 10px 20px; /* Space between menu items */
+  border-bottom: 1px solid #ccc; /* Separator line */
+}
+
+.menu li:last-child {
+  border-bottom: none; /* Remove border for the last item */
+}
+
+.menu li a {
+  color: black; /* Black text */
+  text-decoration: none;
+  display: block;
+}
+
+/* Change background on hover for each menu item */
+.menu li a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .app-name {
+    font-size: 16px;
+  }
+
+  .user-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: black; /* Black background */
+    color: white; /* White text */
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase; /* Ensure initials are uppercase */
+    cursor: pointer;
+  }
+
+  .menu {
+    width: 100%;
+  }
+}

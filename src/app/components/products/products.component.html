@@ -1,0 +1,81 @@
+<div class="table-container">
+  <mat-form-field appearance="outline" style="margin-bottom: 20px; width: 100%">
+    <mat-label>Filter products table data</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Ex. name, price, category"
+    />
+  </mat-form-field>
+
+  <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+      <mat-cell *matCellDef="let product">{{ product.id }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+      <mat-cell *matCellDef="let product">{{ product.name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+      <mat-cell *matCellDef="let product">{{ product.price }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+      <mat-cell *matCellDef="let product">
+        <button mat-button (click)="editProduct(product)">Edit</button>
+        <button mat-button (click)="deleteProduct(product.id)">Delete</button>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="category">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Category</mat-header-cell
+      >
+      <mat-cell *matCellDef="let product">{{ product.category }}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <div class="pagination-container">
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+
+  <form (submit)="addProduct()">
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="newProduct.name" name="name" required />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Price</mat-label>
+      <input
+        matInput
+        type="number"
+        [(ngModel)]="newProduct.price"
+        name="price"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Category</mat-label>
+      <input
+        matInput
+        [(ngModel)]="newProduct.category"
+        name="category"
+        required
+      />
+    </mat-form-field>
+    <button mat-raised-button type="submit">
+      {{ editingProduct ? "Update" : "Add" }}
+    </button>
+  </form>
+</div>

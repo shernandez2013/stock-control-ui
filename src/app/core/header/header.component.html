@@ -1,0 +1,30 @@
+<header class="header">
+  <!-- Hamburger menu -->
+  <div class="hamburger-menu" (click)="toggleMenu()">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </div>
+
+  <!-- Application name next to hamburger menu -->
+  <div class="app-name">My Application</div>
+
+  <!-- User icon and details -->
+  <div class="user-info" (click)="toggleUserDetails()">
+    <img src="assets/user-icon.png" alt="User" class="user-icon" />
+    <div *ngIf="showUserDetails" class="user-details">
+      <p>User: John Doe</p>
+      <p>Email: john.doe&#64;example.com</p>
+      <p>Last access: 17/10/2024</p>
+    </div>
+  </div>
+</header>
+
+<!-- Dropdown menu options with proper spacing -->
+<nav *ngIf="menuOpen" class="menu">
+  <ul>
+    <li><a href="#">Option 1</a></li>
+    <li><a href="#">Option 2</a></li>
+    <li><a href="#">Option 3</a></li>
+  </ul>
+</nav>
