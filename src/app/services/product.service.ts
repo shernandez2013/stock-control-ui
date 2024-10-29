@@ -41,8 +41,8 @@ export class ProductService {
 }
 
 export interface Product {
-  id: number;
+  id?: number;
   name: string;
-  price: number;
   category: string;
+  price: number;
 }

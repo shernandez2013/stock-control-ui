@@ -1,42 +1,29 @@
-.table-container {
-  width: 100%; /* Asegura que la tabla use el ancho completo */
-  padding: 20px; /* Espaciado interno para separar la tabla del borde */
-  box-sizing: border-box; /* Incluye el padding en el ancho total */
-  margin-top: 20px; /* Espaciado entre el header y la tabla */
-}
-
-table {
+.p-datatable-responsive {
   width: 100%;
+  overflow-x: auto;
 }
 
-mat-form-field {
-  margin-bottom: 16px;
+.p-dialog {
+  max-width: 90vw;
 }
 
-@media (max-width: 768px) {
-  table {
-    font-size: 14px;
+@media (max-width: 600px) {
+  .p-field {
+    flex-direction: column;
+  }
+
+  .p-table thead th, .p-table tbody td {
+    padding: 0.5rem;
+    font-size: 0.9rem;
   }
 }
 
-.pagination-container {
+.icon-buttons {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 20px;
 }
 
-mat-form-field {
+.p-button {
   margin: 0;
-  padding: 0;
-  width: 100%;
-}
-
-mat-table {
-  margin-top: 20px;
-  width: 100%;
-}
-
-mat-form-field {
-  width: 100%;
-  margin-bottom: 0;
 }
