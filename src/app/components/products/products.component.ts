@@ -14,20 +14,49 @@ export class ProductsComponent implements OnInit {
   selectedProduct: Product | null = null;
   productDialog: boolean = false;
   isEdit: boolean = false;
+  allChecked = false;
+
+
 
   constructor(private productService: ProductService) {
-
   }
 
   ngOnInit() {
     this.products = [
-      {id: 1, name: 'Product 1', category: 'Category 1', price: 100},
-      {id: 2, name: 'Product 2', category: 'Category 2', price: 200},
+      {id: 1, name: 'Product 1', category: 'Category 1', price: 100,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
     ];
   }
 
+  toggleAll() {
+    this.allChecked = !this.allChecked;
+    this.products.forEach(product => product.selected = this.allChecked);
+  }
+
+  updateSelection() {
+    this.allChecked = this.products.every(product => product.selected);
+  }
+
+  hasSelectedProducts() {
+    return this.products.some(product => product.selected);
+  }
+
+  deleteSelectedProducts() {
+    this.products = this.products.filter(product => !product.selected);
+    this.allChecked = false;
+  }
+
   openNewProductDialog() {
-    this.selectedProduct = {name: '', category: '', price: 0};
+    this.selectedProduct = {name: '', category: '', price: 0, selected:false};
     this.isEdit = false;
     this.productDialog = true;
   }

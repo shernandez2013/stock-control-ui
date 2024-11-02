@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-header',
@@ -8,12 +9,25 @@ import { Component } from '@angular/core';
 export class HeaderComponent {
   menuOpen: boolean = false;
   showUserDetails: boolean = false;
+  showLanguageMenu = false;
+
+  constructor(private translate: TranslateService) {
+    this.translate.setDefaultLang('en');
+  }
+
+  switchLanguage(language: string) {
+    this.translate.use(language);
+    this.showLanguageMenu = false;
+  }
+
+  toggleLanguageMenu() {
+    this.showLanguageMenu = !this.showLanguageMenu;
+  }
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
   }
 
-  // Toggles the user details dropdown
   toggleUserDetails() {
     this.showUserDetails = !this.showUserDetails;
   }

@@ -9,8 +9,8 @@ export class ProductService {
   products$ = this.productsSubject.asObservable();
 
   private products: Product[] = [
-    { id: 1, name: 'Product 1', price: 100, category: 'Category A' },
-    { id: 2, name: 'Product 2', price: 150, category: 'Category B' },
+    { id: 1, name: 'Product 1', price: 100, category: 'Category A',selected: false },
+    { id: 2, name: 'Product 2', price: 150, category: 'Category B', selected: false },
   ];
 
   constructor() {
@@ -45,4 +45,5 @@ export interface Product {
   name: string;
   category: string;
   price: number;
+  selected: boolean;
 }

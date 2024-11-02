@@ -1,75 +1,113 @@
-<p-table #dt [value]="products" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]"
-         [globalFilterFields]="['name', 'category', 'price']" sortMode="multiple" class="p-datatable-responsive">
+<div class="table-container">
+  <div class="button-container">
+    <div class="left-buttons">
+      <button pButton icon="pi pi-trash" (click)="deleteSelectedProducts()"
+              class="p-button-danger add-button"
+              [disabled]="!hasSelectedProducts()"></button>
+    </div>
+    <div class="right-buttons">
+    <button pButton label="{{ 'TABLE.ADD_PRODUCT' | translate }}" icon="pi pi-plus"
+            (click)="openNewProductDialog()" class="add-button"></button>
+    <button pButton label="{{ 'TABLE.EXPORT_PRODUCTS' | translate }}" icon="pi pi-upload"
+            (click)="openNewProductDialog()" class="p-button-success add-button"></button>
+    </div>
+    </div>
+  <p-table #dt [value]="products" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]"
+           [globalFilterFields]="['name', 'category', 'price']" sortMode="multiple" class="p-datatable-responsive">
 
-  <ng-template pTemplate="header">
-    <tr>
-      <th pSortableColumn="name">Name
-        <p-sortIcon field="name"></p-sortIcon>
-      </th>
-      <th pSortableColumn="category">Category
-        <p-sortIcon field="category"></p-sortIcon>
-      </th>
-      <th pSortableColumn="price">Price
-        <p-sortIcon field="price"></p-sortIcon>
-      </th>
-      <th>Actions</th>
-    </tr>
-    <tr>
-      <th>
-        <input pInputText type="text" (input)="filterByName($event)" placeholder="Search by name">
-      </th>
-      <th>
-        <input pInputText type="text" (input)="filterByCategory($event)" placeholder="Search by category">
-      </th>
-      <th>
-        <input pInputText type="text" (input)="filterByPrice($event)" placeholder="Search by price">
-      </th>
-      <th></th>
-    </tr>
-  </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>
+          <p-checkbox [(ngModel)]="allChecked" [binary]="true" (onChange)="toggleAll()"></p-checkbox>
+        </th>
+        <th pSortableColumn="name">{{ 'TABLE.NAME' | translate }}
+          <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="category">{{ 'TABLE.CATEGORY' | translate }}
+          <p-sortIcon field="category"></p-sortIcon>
+        </th>
+        <th pSortableColumn="price">{{ 'TABLE.PRICE' | translate }}
+          <p-sortIcon field="price"></p-sortIcon>
+        </th>
+        <th>{{ 'TABLE.ACTIONS' | translate }}</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th>
+          <input pInputText type="text" (input)="filterByName($event)" class="search-input"
+                 placeholder="{{ 'TABLE.SEARCH_BY_NAME' | translate }}">
+        </th>
+        <th>
+          <input pInputText type="text" (input)="filterByCategory($event)" class="search-input"
+                 placeholder="{{ 'TABLE.SEARCH_BY_CATEGORY' | translate }}">
+        </th>
+        <th>
+          <input pInputText type="text" (input)="filterByPrice($event)" class="search-input"
+                 placeholder="{{ 'TABLE.SEARCH_BY_PRICE' | translate }}">
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
 
-  <ng-template pTemplate="body" let-product>
-    <tr>
-      <td>{{ product.name }}</td>
-      <td>{{ product.category }}</td>
-      <td>{{ product.price | currency }}</td>
-      <td>
-        <div class="icon-buttons">
-          <button pButton icon="pi pi-pencil" (click)="editProduct(product)" class="p-button-warning"></button>
-          <button pButton icon="pi pi-trash" (click)="deleteProduct(product)" class="p-button-danger"
-                  style="margin-left: 5px"></button>
-        </div>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>
+          <p-checkbox [(ngModel)]="product.selected"  [binary]="true" (onChange)="updateSelection()"></p-checkbox>
+        </td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.price | currency }}</td>
+        <td>
+          <div class="icon-buttons">
+            <button
+              pButton
+              icon="pi pi-pencil"
+              (click)="editProduct(product)"
+              class="p-button-warning icon"
+              style="width: 20px; height: 20px; background: transparent; border: none;"
+            ></button>
 
-<button pButton label="Add product" icon="pi pi-plus" (click)="openNewProductDialog()"></button>
+            <button
+              pButton
+              icon="pi pi-trash"
+              (click)="deleteProduct(product)"
+              class="p-button-warning icon"
+              style="margin-left: 5px; width: 20px; height: 20px; background: transparent; border: none;"
+            ></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
 
-<p-dialog [(visible)]="productDialog" header="Product details" [modal]="true" [closable]="false"
+<p-dialog [(visible)]="productDialog" header="{{ 'TABLE.DIALOG.HEADER' | translate }}" [modal]="true" [closable]="false"
           [responsive]="true" [style]="{width: '60vw'}">
   <div class="p-fluid">
     <div class="p-field">
-      <label for="name">Name</label>
+      <label for="name">{{ 'TABLE.DIALOG.NAME_LABEL' | translate }}</label>
       <div *ngIf="selectedProduct">
         <input id="name" [(ngModel)]="selectedProduct.name" type="text" pInputText/>
       </div>
     </div>
     <div class="p-field">
-      <label for="category">Category</label>
+      <label for="category">{{ 'TABLE.DIALOG.CATEGORY_LABEL' | translate }}</label>
       <div *ngIf="selectedProduct">
         <input id="category" [(ngModel)]="selectedProduct.category" type="text" pInputText/>
       </div>
     </div>
     <div class="p-field">
-      <label for="price">Price</label>
+      <label for="price">{{ 'TABLE.DIALOG.PRICE_LABEL' | translate }}</label>
       <div *ngIf="selectedProduct">
         <input id="price" [(ngModel)]="selectedProduct.price" type="number" pInputText/>
       </div>
     </div>
   </div>
   <footer>
-    <button pButton label="Save" icon="pi pi-check" (click)="saveProduct()" class="p-button-text"></button>
-    <button pButton label="Cancel" icon="pi pi-times" (click)="hideDialog()" class="p-button-text"></button>
+    <button pButton label="{{ 'TABLE.DIALOG.SAVE_BUTTON' | translate }}" icon="pi pi-check" (click)="saveProduct()"
+            class="p-button-text"></button>
+    <button pButton label="{{ 'TABLE.DIALOG.CANCEL_BUTTON' | translate }}" icon="pi pi-times" (click)="hideDialog()"
+            class="p-button-text"></button>
   </footer>
 </p-dialog>
+
