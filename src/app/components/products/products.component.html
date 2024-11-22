@@ -1,81 +1,113 @@
 <div class="table-container">
-  <mat-form-field appearance="outline" style="margin-bottom: 20px; width: 100%">
-    <mat-label>Filter products table data</mat-label>
-    <input
-      matInput
-      (keyup)="applyFilter($event)"
-      placeholder="Ex. name, price, category"
-    />
-  </mat-form-field>
+  <div class="button-container">
+    <div class="left-buttons">
+      <button pButton icon="pi pi-trash" (click)="deleteSelectedProducts()"
+              class="p-button-danger add-button"
+              [disabled]="!hasSelectedProducts()"></button>
+    </div>
+    <div class="right-buttons">
+    <button pButton label="{{ 'TABLE.ADD_PRODUCT' | translate }}" icon="pi pi-plus"
+            (click)="openNewProductDialog()" class="add-button"></button>
+    <button pButton label="{{ 'TABLE.EXPORT_PRODUCTS' | translate }}" icon="pi pi-upload"
+            (click)="openNewProductDialog()" class="p-button-success add-button"></button>
+    </div>
+    </div>
+  <p-table #dt [value]="products" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]"
+           [globalFilterFields]="['name', 'category', 'price']" sortMode="multiple" class="p-datatable-responsive">
 
-  <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-      <mat-cell *matCellDef="let product">{{ product.id }}</mat-cell>
-    </ng-container>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>
+          <p-checkbox [(ngModel)]="allChecked" [binary]="true" (onChange)="toggleAll()"></p-checkbox>
+        </th>
+        <th pSortableColumn="name">{{ 'TABLE.NAME' | translate }}
+          <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="category">{{ 'TABLE.CATEGORY' | translate }}
+          <p-sortIcon field="category"></p-sortIcon>
+        </th>
+        <th pSortableColumn="price">{{ 'TABLE.PRICE' | translate }}
+          <p-sortIcon field="price"></p-sortIcon>
+        </th>
+        <th>{{ 'TABLE.ACTIONS' | translate }}</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th>
+          <input pInputText type="text" (input)="filterByName($event)" class="search-input"
+                 placeholder="{{ 'TABLE.SEARCH_BY_NAME' | translate }}">
+        </th>
+        <th>
+          <input pInputText type="text" (input)="filterByCategory($event)" class="search-input"
+                 placeholder="{{ 'TABLE.SEARCH_BY_CATEGORY' | translate }}">
+        </th>
+        <th>
+          <input pInputText type="text" (input)="filterByPrice($event)" class="search-input"
+                 placeholder="{{ 'TABLE.SEARCH_BY_PRICE' | translate }}">
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
 
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-      <mat-cell *matCellDef="let product">{{ product.name }}</mat-cell>
-    </ng-container>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>
+          <p-checkbox [(ngModel)]="product.selected"  [binary]="true" (onChange)="updateSelection()"></p-checkbox>
+        </td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.price | currency }}</td>
+        <td>
+          <div class="icon-buttons">
+            <button
+              pButton
+              icon="pi pi-pencil"
+              (click)="editProduct(product)"
+              class="p-button-warning icon"
+              style="width: 20px; height: 20px; background: transparent; border: none;"
+            ></button>
 
-    <ng-container matColumnDef="price">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
-      <mat-cell *matCellDef="let product">{{ product.price }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
-      <mat-cell *matCellDef="let product">
-        <button mat-button (click)="editProduct(product)">Edit</button>
-        <button mat-button (click)="deleteProduct(product.id)">Delete</button>
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="category">
-      <mat-header-cell *matHeaderCellDef mat-sort-header
-        >Category</mat-header-cell
-      >
-      <mat-cell *matCellDef="let product">{{ product.category }}</mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-  </mat-table>
-
-  <div class="pagination-container">
-    <mat-paginator
-      [pageSizeOptions]="[5, 10, 20]"
-      showFirstLastButtons
-    ></mat-paginator>
-  </div>
-
-  <form (submit)="addProduct()">
-    <mat-form-field appearance="outline">
-      <mat-label>Name</mat-label>
-      <input matInput [(ngModel)]="newProduct.name" name="name" required />
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Price</mat-label>
-      <input
-        matInput
-        type="number"
-        [(ngModel)]="newProduct.price"
-        name="price"
-        required
-      />
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Category</mat-label>
-      <input
-        matInput
-        [(ngModel)]="newProduct.category"
-        name="category"
-        required
-      />
-    </mat-form-field>
-    <button mat-raised-button type="submit">
-      {{ editingProduct ? "Update" : "Add" }}
-    </button>
-  </form>
+            <button
+              pButton
+              icon="pi pi-trash"
+              (click)="deleteProduct(product)"
+              class="p-button-warning icon"
+              style="margin-left: 5px; width: 20px; height: 20px; background: transparent; border: none;"
+            ></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>
+
+<p-dialog [(visible)]="productDialog" header="{{ 'TABLE.DIALOG.HEADER' | translate }}" [modal]="true" [closable]="false"
+          [responsive]="true" [style]="{width: '60vw'}">
+  <div class="p-fluid">
+    <div class="p-field">
+      <label for="name">{{ 'TABLE.DIALOG.NAME_LABEL' | translate }}</label>
+      <div *ngIf="selectedProduct">
+        <input id="name" [(ngModel)]="selectedProduct.name" type="text" pInputText/>
+      </div>
+    </div>
+    <div class="p-field">
+      <label for="category">{{ 'TABLE.DIALOG.CATEGORY_LABEL' | translate }}</label>
+      <div *ngIf="selectedProduct">
+        <input id="category" [(ngModel)]="selectedProduct.category" type="text" pInputText/>
+      </div>
+    </div>
+    <div class="p-field">
+      <label for="price">{{ 'TABLE.DIALOG.PRICE_LABEL' | translate }}</label>
+      <div *ngIf="selectedProduct">
+        <input id="price" [(ngModel)]="selectedProduct.price" type="number" pInputText/>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <button pButton label="{{ 'TABLE.DIALOG.SAVE_BUTTON' | translate }}" icon="pi pi-check" (click)="saveProduct()"
+            class="p-button-text"></button>
+    <button pButton label="{{ 'TABLE.DIALOG.CANCEL_BUTTON' | translate }}" icon="pi pi-times" (click)="hideDialog()"
+            class="p-button-text"></button>
+  </footer>
+</p-dialog>
+

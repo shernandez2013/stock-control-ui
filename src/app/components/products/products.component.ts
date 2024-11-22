@@ -1,8 +1,6 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Product, ProductService} from "../../services/product.service";
+import {Table} from "primeng/table";
 
 
 @Component({
@@ -11,56 +9,97 @@ import {Product, ProductService} from "../../services/product.service";
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'price', 'category'];
-  dataSource: MatTableDataSource<Product>;
-  newProduct: Product = { id: 0, name: '', price: 0, category: '' };
-  editingProduct: Product | null = null;
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('dt') dt!: Table;
+  products: Product[] = [];
+  selectedProduct: Product | null = null;
+  productDialog: boolean = false;
+  isEdit: boolean = false;
+  allChecked = false;
 
-  products: Product[] = [
-    { id: 1, name: 'Product 1', price: 100, category: 'Category A' },
-    { id: 2, name: 'Product 2', price: 150, category: 'Category B' },
-    { id: 2, name: 'Product 2', price: 150, category: 'Category B' },
-    { id: 2, name: 'Product 2', price: 150, category: 'Category B' },
-    { id: 2, name: 'Product 2', price: 150, category: 'Category B' },
-    { id: 2, name: 'Product 2', price: 150, category: 'Category B' },
-  ];
+
 
   constructor(private productService: ProductService) {
-    this.dataSource = new MatTableDataSource<Product>(this.products);
   }
 
   ngOnInit() {
-    this.dataSource.data = this.products;
+    this.products = [
+      {id: 1, name: 'Product 1', category: 'Category 1', price: 100,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+      {id: 2, name: 'Product 2', category: 'Category 2', price: 200,selected: false},
+    ];
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
+  toggleAll() {
+    this.allChecked = !this.allChecked;
+    this.products.forEach(product => product.selected = this.allChecked);
+  }
 
-    this.dataSource.paginator = this.paginator;
+  updateSelection() {
+    this.allChecked = this.products.every(product => product.selected);
   }
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+  hasSelectedProducts() {
+    return this.products.some(product => product.selected);
   }
-  addProduct() {
-    if (this.editingProduct) {
-      this.productService.updateProduct(this.newProduct);
-      this.editingProduct = null;
-    } else {
-      this.newProduct.id = this.dataSource.data.length + 1;
-      this.productService.addProduct(this.newProduct);
-    }
-    this.newProduct = { id: 0, name: '', price: 0, category: '' };
+
+  deleteSelectedProducts() {
+    this.products = this.products.filter(product => !product.selected);
+    this.allChecked = false;
+  }
+
+  openNewProductDialog() {
+    this.selectedProduct = {name: '', category: '', price: 0, selected:false};
+    this.isEdit = false;
+    this.productDialog = true;
   }
 
   editProduct(product: Product) {
-    this.editingProduct = product;
-    this.newProduct = { ...product };
+    this.selectedProduct = {...product};
+    this.isEdit = true;
+    this.productDialog = true;
   }
 
-  deleteProduct(id: number) {
-    this.productService.deleteProduct(id);
+  saveProduct() {
+    if (this.isEdit && this.selectedProduct) {
+      const index = this.products.findIndex(p => p.id === this.selectedProduct?.id);
+      this.products[index] = this.selectedProduct;
+    } else {
+      this.selectedProduct!.id = this.products.length + 1;
+      this.products.push(this.selectedProduct!);
+    }
+    this.productDialog = false;
+    this.selectedProduct = null;
+  }
+
+  deleteProduct(product: Product) {
+    this.products = this.products.filter(p => p.id !== product.id);
+  }
+
+  filterByName(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.dt.filter(input.value, 'name', 'contains');
+  }
+
+  filterByCategory(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.dt.filter(input.value, 'category', 'contains');
+  }
+
+  filterByPrice(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.dt.filter(input.value, 'price', 'contains');
+  }
+
+  hideDialog() {
+    this.productDialog = false;
+    this.selectedProduct = null;
   }
 }

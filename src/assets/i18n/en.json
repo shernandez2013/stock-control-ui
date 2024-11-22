@@ -1,0 +1,35 @@
+{
+  "TABLE": {
+    "NAME": "Name",
+    "CATEGORY": "Category",
+    "PRICE": "Price",
+    "ACTIONS": "Actions",
+    "SEARCH_BY_NAME": "Search by name",
+    "SEARCH_BY_CATEGORY": "Search by category",
+    "SEARCH_BY_PRICE": "Search by price",
+    "ADD_PRODUCT": "New",
+    "IMPORT_PRODUCTS": "Import",
+    "EXPORT_PRODUCTS": "Export",
+    "DIALOG": {
+      "HEADER": "Product details",
+      "NAME_LABEL": "Name",
+      "CATEGORY_LABEL": "Category",
+      "PRICE_LABEL": "Price",
+      "SAVE_BUTTON": "Save",
+      "CANCEL_BUTTON": "Cancel"
+    }
+  },
+  "header": {
+    "appName": "My Application",
+    "menu": {
+      "home": "Home",
+      "services": "Services",
+      "contact": "Contact"
+    },
+    "user": {
+      "profile": "Profile",
+      "settings": "Settings",
+      "logout": "Log Out"
+    }
+  }
+}

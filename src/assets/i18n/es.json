@@ -1,0 +1,36 @@
+{
+  "TABLE": {
+    "NAME": "Nombre",
+    "CATEGORY": "Categoría",
+    "PRICE": "Precio",
+    "ACTIONS": "Acciones",
+    "SEARCH_BY_NAME": "Buscar por nombre",
+    "SEARCH_BY_CATEGORY": "Buscar por categoría",
+    "SEARCH_BY_PRICE": "Buscar por precio",
+    "ADD_PRODUCT": "Nuevo",
+    "IMPORT_PRODUCTS": "Importar",
+    "EXPORT_PRODUCTS": "Exportar",
+    "DIALOG": {
+      "HEADER": "Detalles del producto",
+      "NAME_LABEL": "Nombre",
+      "CATEGORY_LABEL": "Categoría",
+      "PRICE_LABEL": "Precio",
+      "SAVE_BUTTON": "Guardar",
+      "CANCEL_BUTTON": "Cancelar"
+    }
+  },
+  "header": {
+    "appName": "Mi Aplicación",
+    "menu": {
+      "home": "Inicio",
+      "services": "Servicios",
+      "contact": "Contacto"
+    },
+    "user": {
+      "profile": "Perfil",
+      "settings": "Ajustes",
+      "logout": "Cerrar sesión"
+    }
+  }
+
+}

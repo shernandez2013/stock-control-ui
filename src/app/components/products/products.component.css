@@ -1,42 +1,93 @@
-.table-container {
-  width: 100%; /* Asegura que la tabla use el ancho completo */
-  padding: 20px; /* Espaciado interno para separar la tabla del borde */
-  box-sizing: border-box; /* Incluye el padding en el ancho total */
-  margin-top: 20px; /* Espaciado entre el header y la tabla */
+.p-datatable-responsive {
+  width: auto;
+  margin-top: 20px;
+  overflow-x: auto;
+}
+.p-dialog {
+  max-width: 90vw;
 }
 
-table {
-  width: 100%;
-}
+@media (max-width: 600px) {
+  .p-field {
+    flex-direction: column;
+  }
 
-mat-form-field {
-  margin-bottom: 16px;
-}
-
-@media (max-width: 768px) {
-  table {
-    font-size: 14px;
+  .p-table thead th, .p-table tbody td {
+    padding: 0.5rem;
+    font-size: 0.9rem;
   }
 }
 
-.pagination-container {
+.icon-buttons {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 20px;
 }
 
-mat-form-field {
-  margin: 0;
-  padding: 0;
-  width: 100%;
+.table-container {
+  margin: 40px 40px 40px 40px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
 }
 
-mat-table {
-  margin-top: 20px;
+.table {
   width: 100%;
+  border-collapse: collapse;
 }
 
-mat-form-field {
-  width: 100%;
-  margin-bottom: 0;
+.icon {
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.icon:hover {
+  opacity: 1.8;
+}
+
+.search-input {
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+  width: 75%;
+  transition: border-color 0.3s;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.button-container {
+  display: flex;
+  margin-bottom: 10px;
+  background-color:#EEEEEE ;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-button {
+  margin-right: 10px;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 1rem;
+}
+
+.left-buttons {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.right-buttons {
+  display: flex;
+  align-items: center;
 }
